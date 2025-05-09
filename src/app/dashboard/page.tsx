@@ -379,7 +379,7 @@ const TeslaDashboard = () => {
   </nav>
   
   {/* Footer div at the bottom with logo and logout button */}
-  <div className="mt-auto border-t border-gray-800 py-4 px-4">
+  <div className="mt-auto border-gray-800 py-4 px-4">
     <div className="flex-col items-center justify-between space-y-5">      
       {/* Logout button */}
       <button

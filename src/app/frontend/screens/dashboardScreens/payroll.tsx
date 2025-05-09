@@ -10,7 +10,7 @@ import {
   Download,
   Users,
   CalendarClock,
-  DollarSign,
+  TrendingUp,
   Edit,
   CheckCircle,
   FilePen
@@ -513,29 +513,29 @@ const PayrollDetails: React.FC<PayrollDetailsProps> = ({ payroll, onBack, onEdit
   );
 };
 
-// Stats Card Component
-interface StatsCardProps {
-  icon: React.ElementType;
-  title: string;
-  value: string | number;
-  color: string;
-}
+// // Stats Card Component
+// interface StatsCardProps {
+//   icon: React.ElementType;
+//   title: string;
+//   value: string | number;
+//   color: string;
+// }
 
-const StatsCard: React.FC<StatsCardProps> = ({ icon: Icon, title, value, color }) => {
-  return (
-    <div className="bg-gray-800 rounded-xl shadow-md p-6 border border-gray-700">
-      <div className="flex items-start">
-        <div className={`p-3 rounded-lg ${color}`}>
-          <Icon className="h-6 w-6 text-white" />
-        </div>
-        <div className="ml-4">
-          <h3 className="text-sm font-medium text-gray-400">{title}</h3>
-          <p className="text-2xl font-bold text-white mt-1">{value}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
+// const StatsCard: React.FC<StatsCardProps> = ({ icon: Icon, title, value, color }) => {
+//   return (
+//     <div className="bg-gray-800 rounded-xl shadow-md p-6 border border-gray-700">
+//       <div className="flex items-start">
+//         <div className={`p-3 rounded-lg ${color}`}>
+//           <Icon className="h-6 w-6 text-white" />
+//         </div>
+//         <div className="ml-4">
+//           <h3 className="text-sm font-medium text-gray-400">{title}</h3>
+//           <p className="text-2xl font-bold text-white mt-1">{value}</p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 // Main Payroll Management Component
 const PayrollManagement: React.FC = () => {
@@ -661,30 +661,57 @@ const PayrollManagement: React.FC = () => {
                 </motion.button>
               </div>
 
-              {/* Stats Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <StatsCard
-                  icon={Users}
-                  title="Total Payrolls"
-                  value={totalPayrolls}
-                  color="bg-emerald-500"
-                />
-                <StatsCard
-                  icon={CalendarClock}
-                  title="Pending Payrolls"
-                  value={pendingPayrolls}
-                  color="bg-emerald-500"
-                />
-                <StatsCard
-                  icon={DollarSign}
-                  title="Total Amount (USDC)"
-                  value={`$${totalPayrollAmount.toLocaleString()}`}
-                  color="bg-emerald-600"
-                />
+              <div className="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 shadow-lg">
+          {/* Total Balance Section */}
+          <div className="p-6 border-b border-gray-700 relative overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-emerald-500 opacity-10 blur-xl"></div>
+            <div className="absolute -left-8 -bottom-8 h-16 w-16 rounded-full bg-blue-500 opacity-10 blur-xl"></div>
+            
+            <p className="text-gray-400 text-sm mb-1">Total Balance</p>
+            <div className="flex items-baseline">
+              <h1 className="text-4xl font-bold text-white">${totalPayrollAmount.toLocaleString()}</h1>
+              <span className="ml-3 text-emerald-400 flex items-center text-sm font-medium">
+                <TrendingUp className="h-4 w-4 mr-1" /> 12.4%
+              </span>
+            </div>
+            <p className="text-gray-500 text-xs mt-2">Last updated: May 9, 2025</p>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 divide-x divide-gray-700">
+            {/* Left Stat */}
+            <div className="p-5 border-b border-gray-700">
+              <div className="flex items-center mb-2">
+                <div className="h-6 w-6 rounded bg-gray-700 flex items-center justify-center">
+                  <Users className="h-3 w-3 text-emerald-400" />
+                </div>
+                <p className="ml-2 text-gray-400 text-xs">Total Payrolls</p>
               </div>
+              <div className="flex items-baseline">
+                <p className="text-2xl font-bold text-white">{totalPayrolls}</p>
+                <span className="ml-2 text-emerald-400 text-xs">+8.2%</span>
+              </div>
+            </div>
+
+            {/* Right Stat */}
+            <div className="p-5 border-b border-gray-700">
+              <div className="flex items-center mb-2">
+                <div className="h-6 w-6 rounded bg-gray-700 flex items-center justify-center">
+                  <CalendarClock className="h-3 w-3 text-emerald-400" />
+                </div>
+                <p className="ml-2 text-gray-400 text-xs">Pending Payrolls</p>
+              </div>
+              <div className="flex items-baseline">
+                <p className="text-2xl font-bold text-white">{pendingPayrolls}</p>
+                <span className="ml-2 text-red-400 text-xs">-2.5%</span>
+              </div>
+            </div>
+          </div>
+          </div>
 
               {/* Search and Filter Controls */}
-              <div className="bg-gray-800 p-4 rounded-xl shadow-md mb-6 border border-gray-700">
+              <div className="bg-gray-800 p-4 rounded-xl shadow-md mb-6 border border-gray-700 mt-5">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
                   <div className="w-full md:w-1/3 relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
