@@ -11,18 +11,24 @@
   "dependencies": {
     "@civic/auth": "^0.5.2",
     "@civic/auth-web3": "^0.5.7",
+    "@supabase/supabase-js": "^2.49.4",
     "bcrypt": "^5.1.1",
+    "dotenv": "^16.5.0",
     "formidable": "^3.5.4",
+    "framer-motion": "^12.10.4",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.505.0",
     "next": "^15.3.1",
     "pg": "^8.15.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "supabase": "^2.22.12"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/formidable": "^3.4.5",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20",
     "@types/pg": "^8.15.1",
     "@types/react": "^19",
