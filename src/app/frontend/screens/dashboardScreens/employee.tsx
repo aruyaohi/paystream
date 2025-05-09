@@ -512,8 +512,8 @@ const EmployeePage: React.FC = () => {
             >
               <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-100">Employee Management</h2>
-                  <p className="mt-1 text-gray-200">Manage your payroll here...</p>
+                  <h2 className="text-2xl font-bold text-gray-100">Team Management</h2>
+                  <p className="mt-1 text-gray-200">Manage your Team Informations here...</p>
                 </div>
                 <div className="flex space-x-2">
                 <motion.button
@@ -523,7 +523,7 @@ const EmployeePage: React.FC = () => {
                   className="mt-4 md:mt-0 px-6 py-3 bg-gray-900 border border-emerald-500 text-white hover:bg-emerald-500 hover:text-white rounded-lg flex items-center justify-center transition-colors shadow-md"
                 >
                   <FilePen className="mr-2 h-5 w-5" />
-                  Add New Employee
+                  Add New Member
                 </motion.button>
                 </div>
               </div>
@@ -533,8 +533,8 @@ const EmployeePage: React.FC = () => {
               <div className="bg-gray-900 p-4 rounded-xl shadow-md mb-6">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
                   <div>
-                    <h2 className="text-3xl font-bold">Employee Data</h2>
-                    <p>Manage Employee Data here...</p>
+                    <h2 className="text-3xl font-bold">Team Data</h2>
+                    <p>Manage Team Data here...</p>
                   </div>
                   <div className="w-full md:w-1/3 relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />

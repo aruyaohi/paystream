@@ -250,7 +250,7 @@ const TeslaDashboard = () => {
   const navItems = [
     { name: 'Payroll', icon: <File size={24} /> },
     { name: 'Wallet', icon: <Wallet size={24} /> },
-    { name: 'Employee Data', icon: <UsersRound size={24} /> },
+    { name: 'Team', icon: <UsersRound size={24} /> },
     { name: 'Profile', icon: <User size={24} /> },
   ];
 
@@ -329,7 +329,7 @@ const TeslaDashboard = () => {
     switch (activeTab) {
       case 'Profile':
         return <InvestorProfile />;
-      case 'Employee Data':
+      case 'Team':
         return <EmployeePage/>;
       case 'Payroll':
         return <PayrollManagement/>;
