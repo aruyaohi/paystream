@@ -668,9 +668,9 @@ const PayrollManagement: React.FC = () => {
             <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-emerald-500 opacity-10 blur-xl"></div>
             <div className="absolute -left-8 -bottom-8 h-16 w-16 rounded-full bg-blue-500 opacity-10 blur-xl"></div>
             
-            <p className="text-gray-400 text-sm mb-1">Total Balance</p>
+            <p className="text-gray-400 text-sm mb-1">Total Payroll Balance</p>
             <div className="flex items-baseline">
-              <h1 className="text-4xl font-bold text-white">${totalPayrollAmount.toLocaleString()}</h1>
+              <h1 className="text-4xl font-bold text-white">{totalPayrollAmount.toLocaleString()} <span className="text-sm">USDC </span></h1>
               <span className="ml-3 text-emerald-400 flex items-center text-sm font-medium">
                 <TrendingUp className="h-4 w-4 mr-1" /> 12.4%
               </span>
@@ -690,7 +690,6 @@ const PayrollManagement: React.FC = () => {
               </div>
               <div className="flex items-baseline">
                 <p className="text-2xl font-bold text-white">{totalPayrolls}</p>
-                <span className="ml-2 text-emerald-400 text-xs">+8.2%</span>
               </div>
             </div>
 
@@ -704,7 +703,6 @@ const PayrollManagement: React.FC = () => {
               </div>
               <div className="flex items-baseline">
                 <p className="text-2xl font-bold text-white">{pendingPayrolls}</p>
-                <span className="ml-2 text-red-400 text-xs">-2.5%</span>
               </div>
             </div>
           </div>
