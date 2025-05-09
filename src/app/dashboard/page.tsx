@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { LogOut, Wallet,AlignLeft, User, HelpCircle, Loader, X, PowerIcon, Bell,Zap,File, UserRound } from 'lucide-react';
+import { LogOut, Wallet,AlignLeft, User, HelpCircle, Loader, X, PowerIcon, Bell,Zap,File, UserRound, UsersRound } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import WalletPage from '../frontend/screens/dashboardScreens/wallet';
 import InvestorProfile from '../frontend/screens/dashboardScreens/profile';
@@ -143,7 +143,7 @@ const TeslaDashboard = () => {
           {/* Mobile Menu Toggle Button - Now first in the layout */}
             {/* User profile */}
                   <div className="flex items-center">
-                  <AlignLeft size={25} className="text-gray-100" />
+                 {isMobileOpen?<X size={25} className="text-gray-100" onClick={toggleMobileMenu} />:<AlignLeft size={25} className="text-gray-100" onClick={toggleMobileMenu} />} 
                   </div>
           <div className="relative">
             <button 
@@ -204,7 +204,7 @@ const TeslaDashboard = () => {
                       key={item.name}
                       className={`
                         flex items-center space-x-3 px-4 py-4 
-                        text-gray-700 hover:bg-gray-100 w-full text-left 
+                        text-gray-50 hover:bg-gray-100 w-full text-left 
                         ${activeTab === item.name ? 'bg-green-50 text-emerald-500' : ''}
                       `}
                       onClick={() => {
@@ -250,7 +250,7 @@ const TeslaDashboard = () => {
   const navItems = [
     { name: 'Payroll', icon: <File size={24} /> },
     { name: 'Wallet', icon: <Wallet size={24} /> },
-    { name: 'Employee Data', icon: <UserRound size={24} /> },
+    { name: 'Employee Data', icon: <UsersRound size={24} /> },
     { name: 'Profile', icon: <User size={24} /> },
   ];
 
