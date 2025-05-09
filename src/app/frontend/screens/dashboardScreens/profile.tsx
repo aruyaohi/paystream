@@ -313,7 +313,7 @@ const ProfilePage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-700"
+          className="bg-gray-900 rounded-xl shadow-lg overflow-hidden border border-gray-700"
         >
           <div className="p-6 sm:p-8">
             <motion.div 
@@ -375,7 +375,7 @@ const ProfilePage = () => {
 
                 {/* Quick Contact Info Cards */}
                 <motion.div variants={itemVariants} className="w-full space-y-3">
-                  <div className="flex items-center p-3 bg-gray-700 rounded-lg border border-gray-600">
+                  <div className="flex items-center p-3 bg-gray-900 rounded-lg border border-emerald-500">
                     <div className="p-2 bg-emerald-500 bg-opacity-20 rounded-full mr-3">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -387,7 +387,7 @@ const ProfilePage = () => {
                     </div>
                   </div>
                   
-                  <div className="flex items-center p-3 bg-gray-700 rounded-lg border border-gray-600">
+                  <div className="flex items-center p-3 bg-gray-900 rounded-lg border border-emerald-600">
                     <div className="p-2 bg-emerald-500 bg-opacity-20 rounded-full mr-3">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -399,7 +399,7 @@ const ProfilePage = () => {
                     </div>
                   </div>
                   
-                  <div className="flex items-center p-3 bg-gray-700 rounded-lg border border-gray-600">
+                  <div className="flex items-center p-3 bg-gray-900 rounded-lg border border-emerald-500">
                     <div className="p-2 bg-emerald-500 bg-opacity-20 rounded-full mr-3">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -415,7 +415,7 @@ const ProfilePage = () => {
               
               {/* Form Section - Takes 8 columns on large screens */}
               <motion.div variants={itemVariants} className="lg:col-span-8">
-                <div className="bg-gray-700 p-6 rounded-xl mb-6 border border-gray-600">
+                <div className="bg-gray-900 p-6 rounded-xl mb-6 border border-gray-600">
                   <h3 className="text-lg font-bold text-white mb-4">
                     Personal Information
                   </h3>
@@ -434,7 +434,7 @@ const ProfilePage = () => {
                             required
                           />
                         ) : (
-                          <p className="text-gray-100 py-2 px-4 bg-gray-800 rounded-lg border border-gray-600">{userData.firstname}</p>
+                          <p className="text-emerald-500 py-2 px-4 bg-gray-700 rounded-lg border border-gray-600">{userData.firstname}</p>
                         )}
                       </div>
                       
@@ -450,7 +450,7 @@ const ProfilePage = () => {
                             required
                           />
                         ) : (
-                          <p className="text-gray-100 py-2 px-4 bg-gray-800 rounded-lg border border-gray-600">{userData.lastname}</p>
+                          <p className="text-emerald-500 py-2 px-4 bg-gray-800 rounded-lg border border-gray-600">{userData.lastname}</p>
                         )}
                       </div>
                       
@@ -466,7 +466,7 @@ const ProfilePage = () => {
                             required
                           />
                         ) : (
-                          <p className="text-gray-100 py-2 px-4 bg-gray-800 rounded-lg border border-gray-600">{userData.email}</p>
+                          <p className="text-emerald-500 py-2 px-4 bg-gray-800 rounded-lg border border-gray-600">{userData.email}</p>
                         )}
                       </div>
                       
@@ -481,7 +481,7 @@ const ProfilePage = () => {
                             className="w-full px-4 py-2 border border-gray-600 bg-gray-800 rounded-lg text-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-30 transition-all duration-200"
                           />
                         ) : (
-                          <p className="text-gray-100 py-2 px-4 bg-gray-800 rounded-lg border border-gray-600">{userData.mobile_number || "Not provided"}</p>
+                          <p className="text-emerald-500 py-2 px-4 bg-gray-800 rounded-lg border border-gray-600">{userData.mobile_number || "Not provided"}</p>
                         )}
                       </div>
                       
@@ -493,10 +493,10 @@ const ProfilePage = () => {
                             name="date_of_birth"
                             value={formData.date_of_birth}
                             onChange={handleInputChange}
-                            className="w-full px-4 py-2 border border-gray-600 bg-gray-800 rounded-lg text-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-30 transition-all duration-200"
+                            className="w-full px-4 py-2 border border-emerald-500 bg-gray-900 rounded-lg text-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-30 transition-all duration-200"
                           />
                         ) : (
-                          <p className="text-gray-100 py-2 px-4 bg-gray-800 rounded-lg border border-gray-600">
+                          <p className="text-emerald-500 py-2 px-4 bg-gray-800 rounded-lg border border-gray-600">
                             {formatDate(userData.date_of_birth) || "Not provided"}
                           </p>
                         )}

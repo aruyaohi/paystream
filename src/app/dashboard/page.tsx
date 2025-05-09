@@ -7,6 +7,7 @@ import InvestorProfile from '../frontend/screens/dashboardScreens/profile';
 import NotificationScreen from '../frontend/screens/dashboardScreens/notifications';
 import PayrollManagement from '../frontend/screens/dashboardScreens/payroll';
 import EmployeePage from '../frontend/screens/dashboardScreens/employee';
+import { UserButton } from '@civic/auth/react';
 
 const TeslaDashboard = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -358,10 +359,11 @@ const TeslaDashboard = () => {
 <div className="hidden md:flex flex-col w-96 bg-gray-900 h-full">
   {/* Navigation section taking up most of the space but allowing room for footer */}
   <div className="flex items-center p-4">
-              <div className="bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg p-2 mr-2">
+              {/* <div className="bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg p-2 mr-2">
                 <Zap className="h-5 w-5 text-black" />
               </div>
-              <span className="text-lg font-bold text-white">PayStream</span>
+              <span className="text-lg font-bold text-white">PayStream</span> */}
+              <UserButton className='border-emerald-500 text-emerald-500 rounded-l-2xl'/>
           </div>
   <nav className="flex flex-col flex-1 overflow-y-auto py-4">
     {navItems.filter(item => item.name !== 'Logout').map(item => (
