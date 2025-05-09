@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { LogOut, Wallet,AlignLeft, User, HelpCircle, Loader, X, PowerIcon, Bell,Zap,File, UserRound, UsersRound } from 'lucide-react';
+import { LogOut, Wallet,AlignLeft, User, HelpCircle, Loader, X, PowerIcon, Bell,Zap,File, UsersRound } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import WalletPage from '../frontend/screens/dashboardScreens/wallet';
 import InvestorProfile from '../frontend/screens/dashboardScreens/profile';
