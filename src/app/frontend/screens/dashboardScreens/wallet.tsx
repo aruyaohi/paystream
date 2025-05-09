@@ -3,7 +3,6 @@
 
 import { 
   ArrowRightLeft, 
-  Settings, 
   Plus, 
   ArrowRight, 
   ArrowLeft
