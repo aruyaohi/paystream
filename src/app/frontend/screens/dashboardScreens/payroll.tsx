@@ -661,7 +661,7 @@ const PayrollManagement: React.FC = () => {
                 </motion.button>
               </div>
 
-              <div className="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 shadow-lg">
+              <div className="rounded-2xl overflow-hidden border border-gray-700 shadow-lg">
           {/* Total Balance Section */}
           <div className="p-6 border-b border-gray-700 relative overflow-hidden">
             {/* Decorative elements */}
@@ -695,6 +695,19 @@ const PayrollManagement: React.FC = () => {
 
             {/* Right Stat */}
             <div className="p-5 border-b border-gray-700">
+              <div className="flex items-center mb-2">
+                <div className="h-6 w-6 rounded bg-gray-700 flex items-center justify-center">
+                  <CalendarClock className="h-3 w-3 text-emerald-400" />
+                </div>
+                <p className="ml-2 text-gray-400 text-xs">Pending Payrolls</p>
+              </div>
+              <div className="flex items-baseline">
+                <p className="text-2xl font-bold text-white">{pendingPayrolls}</p>
+              </div>
+            </div>
+
+              {/* Right Stat */}
+              <div className="p-5 border-b border-gray-700">
               <div className="flex items-center mb-2">
                 <div className="h-6 w-6 rounded bg-gray-700 flex items-center justify-center">
                   <CalendarClock className="h-3 w-3 text-emerald-400" />

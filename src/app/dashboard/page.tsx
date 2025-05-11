@@ -8,6 +8,10 @@ import NotificationScreen from '../frontend/screens/dashboardScreens/notificatio
 import PayrollManagement from '../frontend/screens/dashboardScreens/payroll';
 import EmployeePage from '../frontend/screens/dashboardScreens/employee';
 import { UserButton } from '@civic/auth/react';
+import { useUser } from '@civic/auth-web3/react';
+import { userHasWallet } from '@civic/auth-web3';
+// import { Connection } from '@solana/web3.js';
+
 
 const TeslaDashboard = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -19,69 +23,87 @@ const TeslaDashboard = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const loadingError = '';
 
-  type Notification = {
-      id: number;
-      user_id: number;
-      message: string;
-      status: string;
-      created_at: string;
-    };
+  // type Notification = {
+  //     id: number;
+  //     user_id: number;
+  //     message: string;
+  //     status: string;
+  //     created_at: string;
+  //   };
 
-  type Investments = {
-    id: number;
-    plan: string;
-    amount: string;
-    duration: {
-      month: number;
-    }
-    user_id: number;
-  }
+  // type Investments = {
+  //   id: number;
+  //   plan: string;
+  //   amount: string;
+  //   duration: {
+  //     month: number;
+  //   }
+  //   user_id: number;
+  // }
     
-    type DashboardResponse = {
-      notifications: {
-        notifications: Notification[];
-      };
-      investments :{
-        investments: Investments[];
-      }
-    };
+    // type DashboardResponse = {
+    //   notifications: {
+    //     notifications: Notification[];
+    //   };
+    //   investments :{
+    //     investments: Investments[];
+    //   }
+    // };
   
+    const userContext = useUser()
+    const user = useUser()
 
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) return;
-        const response = await fetch("/api/dashboard", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({token }),
-        });
-        // if (response.status === 401) {
-        //   window.location.href = '/login';
-        // }
-        if (!response.ok) {
-          throw new Error("Failed to fetch notifications");
-        }
-        const data: DashboardResponse = await response.json();
-        localStorage.setItem('investments', JSON.stringify(data.investments));
-        const notificationsList = data?.notifications;
+  // useEffect(() => {
+  //   const fetchNotifications = async () => {
+  //     try {
+  //       const token = localStorage.getItem("token");
+  //       if (!token) return;
+  //       const response = await fetch("/api/dashboard", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({token }),
+  //       });
+  //       // if (response.status === 401) {
+  //       //   window.location.href = '/login';
+  //       // }
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch notifications");
+  //       }
+  //       const data: DashboardResponse = await response.json();
+  //       localStorage.setItem('investments', JSON.stringify(data.investments));
+  //       const notificationsList = data?.notifications;
 
-        if (Array.isArray(notificationsList)) {
-        const unreadCount = notificationsList.filter(
-        (notification) => notification.status === 'unread').length;
-        setNotificationCount(unreadCount);   
+  //       if (Array.isArray(notificationsList)) {
+  //       const unreadCount = notificationsList.filter(
+  //       (notification) => notification.status === 'unread').length;
+  //       setNotificationCount(unreadCount);   
+  //       }
+  //       } catch (error) {
+  //       console.error("Error fetching notifications:", error);
+  //     }
+  //   }; 
+  //   fetchNotifications();
+  // }, []);
+  
+    useEffect(() => {
+      const createWallet = async () =>{
+        if(userContext.user && !userHasWallet(userContext)){
+          await userContext.createWallet();
+          console.log("user does not have a wallet")
         }
-        } catch (error) {
-        console.error("Error fetching notifications:", error);
+        console.log("User has a wallet");
       }
-    }; 
-    fetchNotifications();
-  }, []);
-  
-  
+
+      // const checkWalletBalance = async () =>{
+      //   const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=26cb6d06-f201-43e1-ae14-1c336ccd324a');
+      //   const { publicKey } = user.solana.wallet;
+      //   const balance = await connection.getBalance(publicKey);
+      // }
+
+      createWallet();
+    }, [user]);
 
   // const messageRead = () =>{}
   const clearNotifications = () =>{
@@ -189,7 +211,7 @@ const TeslaDashboard = () => {
                 className="fixed top-0 left-0 bottom-0 w-64 bg-gray-900 shadow-lg z-40"
               >
                 {/* Close Button */}
-                <div className="p-4 flex justify-end border-b border-gray-200">
+                <div className="p-4 flex justify-end">
                   <button 
                     onClick={toggleMobileMenu}
                     className="p-2 rounded-full hover:bg-gray-100 text-gray-800"
@@ -250,8 +272,8 @@ const TeslaDashboard = () => {
 
   const navItems = [
     { name: 'Payroll', icon: <File size={24} /> },
-    { name: 'Wallet', icon: <Wallet size={24} /> },
     { name: 'Team', icon: <UsersRound size={24} /> },
+    { name: 'Wallet', icon: <Wallet size={24} /> },
     { name: 'Profile', icon: <User size={24} /> },
   ];
 
@@ -385,7 +407,7 @@ const TeslaDashboard = () => {
     <div className="flex-col items-center justify-between space-y-5">      
       {/* Logout button */}
       <button
-        className="flex items-center space-x-2 text-white bg-gray-900 border border-emerald-500 hover:text-red-500 w-full px-3 py-2 justify-center rounded-lg"
+        className="flex items-center space-x-2 text-white bg-gray-900 border border-emerald-500 hover:border-red-500 hover:text-red-500 w-full px-3 py-2 justify-center rounded-lg"
         onClick={handleLogout}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

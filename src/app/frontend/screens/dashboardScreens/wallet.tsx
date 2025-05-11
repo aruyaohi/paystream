@@ -1,5 +1,5 @@
 'use client';
-
+import {useEffect } from 'react';
 
 import { 
   ArrowRightLeft, 
@@ -8,14 +8,41 @@ import {
   ArrowLeft
 } from 'lucide-react'; 
 
+import { useUser } from '@civic/auth-web3/react';
+// import { userHasWallet } from '@civic/auth-web3';
+// import { Connection, PublicKey } from '@solana/web3.js';
+// import { Wallet } from '@solana/wallet-adapter-react';
 
-// // Dynamically import chart to avoid SSR issues
-// const LineChart = dynamic(
-//   () => import('./components/LineChart'),
-//   { ssr: false }
-// );
+// const UserContext = useUser();
+
+// type ExistingWeb3UserContext = {
+//   user: {
+//     solana: {
+//       address: string;
+//       wallet: Wallet;
+//     };
+//   };
+// };
 
 export default function WalletPage() {
+  const { user } = useUser();
+  console.log(user)
+  // const [balance, setBalance] = useState<String | Number>('');
+
+  useEffect(() => {
+    // const checkBalance = async () => {
+    //   if (!user?.solana?.wallet?.publicKey) return;
+
+    //   const connection = new Connection('https://api.mainnet-beta.solana.com');
+    //   const publicKey = new PublicKey(user.solana.wallet.publicKey);
+    //   const lamports = await connection.getBalance(publicKey);
+    //   setBalance(lamports/1e9); // Convert lamports to SOL
+    // };
+
+    // checkBalance();
+    console.log(user)
+  }, [user]);
+
   const assets = [
     { name: 'USDC', symbol: 'USDC', value: 0.00, change: -1.8, icon: '◎', color: 'bg-purple-500' },
   ];

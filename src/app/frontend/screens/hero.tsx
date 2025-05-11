@@ -73,7 +73,7 @@ const HeroSection: React.FC = () => {
                  <div className="mt-3">
                     <span className="text-sm text-gray-400">Create a paystream account to automate crypto payroll
                       <Link href="/login">
-                        {/* <button className="ml-1 text-emerald-400 hover:text-emerald-300 font-medium">Login</button> */}
+                        <button className="ml-1 text-emerald-400 hover:text-emerald-300 font-medium">Login</button>
                       </Link>
                     </span>
                   </div>
