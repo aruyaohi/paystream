@@ -14,7 +14,7 @@ import { userHasWallet } from '@civic/auth-web3';
 
 
 const TeslaDashboard = () => {
-  const isMobileOpen = false;
+ 
   // State for notification count (you can replace this with your actual data source)
   const [notificationCount,setNotificationCount] = useState(0);
   const [activeTab, setActiveTab] = useState('Payroll');
