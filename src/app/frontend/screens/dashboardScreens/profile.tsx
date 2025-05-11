@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useUser } from "@civic/auth-web3/react";
 import {
   ArrowLeft,
   Mail,
@@ -65,7 +66,6 @@ interface ActivityItem {
   description: string;
   date: string;
 }
-
 // Mock profile data
 const initialProfile: UserProfile = {
   id: "user001",
@@ -74,11 +74,11 @@ const initialProfile: UserProfile = {
   phone: "+1 (555) 123-4567",
   location: "San Francisco, CA",
   bio: "Senior developer with 8+ years of experience building modern web applications. Passionate about clean code, user experience, and building products that make a difference.",
-  position: "Senior Frontend Developer",
+  position: "",
   department: "Engineering",
   joinDate: "2022-03-15",
   avatar: "/api/placeholder/150/150",
-  coverPhoto: "/api/placeholder/1200/300",
+  coverPhoto: "/download.jpeg",
   socialMedia: {
     website: "https://alexmorgan.dev",
     github: "github.com/alexmorgan",
@@ -629,6 +629,22 @@ const ProfilePage: React.FC = () => {
     handleNavigate('view');
   };
 
+  const { user, } = useUser();
+
+  useEffect(() => {
+    if (user) {
+      setProfile(prev => ({
+        ...prev,
+        coverPhoto: user.picture || prev.coverPhoto,
+        phone: typeof user.phone === 'string'? user.phone : prev.phone,
+        name: user.name || prev.name,
+        email: user.email || prev.email,
+        avatar: typeof user.avatar === 'string' ? user.avatar : prev.avatar,
+      }));
+      
+    }
+  }, [user]);
+
   // Get time since join date
   const getTimeSinceJoin = () => {
     const joinDate = new Date(profile.joinDate);
@@ -663,12 +679,12 @@ const ProfilePage: React.FC = () => {
               {/* Profile Header with Cover Photo */}
               <div className="relative mb-8">
                 <div className="h-64 w-full rounded-xl overflow-hidden">
-                  <Image
+                  <img
                     src={profile.coverPhoto} 
                     alt="Cover" 
                     className="w-full h-full object-cover"
-                    height={100}
-                    width={100}
+                    // height={100}
+                    // width={100}
                   />
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-90"></div>
@@ -691,12 +707,12 @@ const ProfilePage: React.FC = () => {
                 <div className="absolute -bottom-16 left-8 flex items-end">
                   <div className="relative">
                     <div className="h-32 w-32 rounded-full border-4 border-gray-900 overflow-hidden">
-                      <Image
-                        src={profile.avatar} 
-                        alt={profile.name} 
+                      <img
+                        src={profile.coverPhoto} 
+                        alt={"Profile image"} 
                         className="w-full h-full object-cover"
-                        height={100}
-                        width={100}
+                        // height={100}
+                        // width={100}
                       />
                     </div>
                     <div className="absolute bottom-0 right-0 h-6 w-6 bg-green-500 rounded-full border-2 border-gray-900"></div>
@@ -805,10 +821,10 @@ const ProfilePage: React.FC = () => {
                 {/* Right Column - Bio, Tabs and Content */}
                 <div className="lg:col-span-2 space-y-6">
                   {/* Bio Card */}
-                  <div className="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
+                  {/* <div className="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
                     <h2 className="text-xl font-bold text-white mb-4">Bio</h2>
                     <p className="text-gray-300 leading-relaxed">{profile.bio}</p>
-                  </div>
+                  </div> */}
 
                   {/* Tabs and Content */}
                   <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700 overflow-hidden">

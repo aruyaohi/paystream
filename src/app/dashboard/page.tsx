@@ -24,7 +24,7 @@ const TeslaDashboard = () => {
   const loadingError = '';
 
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(prev => !prev);
+   setMobileMenuOpen(!mobileMenuOpen)
   };
   // type Notification = {
   //     id: number;
@@ -169,7 +169,7 @@ const TeslaDashboard = () => {
           {/* Mobile Menu Toggle Button - Now first in the layout */}
             {/* User profile */}
                   <div className="flex items-center">
-                 {isMobileOpen?<X size={25} className="text-gray-100" onClick={toggleMobileMenu} />:<AlignLeft size={25} className="text-gray-100" onClick={toggleMobileMenu} />} 
+                 {mobileMenuOpen?<X size={25} className="text-gray-100" onClick={toggleMobileMenu} />:<AlignLeft size={25} className="text-gray-100" onClick={toggleMobileMenu} />} 
                   </div>
           <div className="relative">
             <button 
@@ -279,6 +279,7 @@ const TeslaDashboard = () => {
     { name: 'Wallet', icon: <Wallet size={24} /> },
     { name: 'Profile', icon: <User size={24} /> },
     { name: 'Analysis', icon: <ChartNoAxesCombined size={24} /> },
+    { name: 'notification', icon: <Bell size={24} /> },
   ];
 
   const mobileNavItems = [

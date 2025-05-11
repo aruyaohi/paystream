@@ -3,7 +3,7 @@
 // import { User } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-// import {UserButton} from '@civic/auth/react';
+import {UserButton} from '@civic/auth/react';
 
 const HeroSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -67,7 +67,9 @@ const HeroSection: React.FC = () => {
                 Join thousands of companies already using PayStream to manage global payroll with stablecoins. 
                 Secure, borderless, and instant payments for your team.
               </p>
-              
+              <div className="flex md:hidden items-center space-x-3 mt-3">
+              <UserButton className="px-8 py-4 border border-transparent text-base font-medium rounded-full text-white bg-gradient-to-r from-blue-400 to-emerald-400 hover:shadow-lg hover:shadow-blue-500/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all flex items-center justify-center sm:w-auto"/>
+              </div>
               <div className="mt-8">
                 <div className="w-full max-w-md">        
                  <div className="mt-3">
