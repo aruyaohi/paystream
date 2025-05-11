@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { LogOut, Wallet,AlignLeft, User, HelpCircle, Loader, X, PowerIcon, Bell,Zap,File, UsersRound } from 'lucide-react';
+import { LogOut, Wallet,AlignLeft, User, HelpCircle, Loader, X, PowerIcon, Bell,Zap,File, UsersRound,ChartNoAxesCombined } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import WalletPage from '../frontend/screens/dashboardScreens/wallet';
 import InvestorProfile from '../frontend/screens/dashboardScreens/profile';
@@ -14,7 +14,7 @@ import { userHasWallet } from '@civic/auth-web3';
 
 
 const TeslaDashboard = () => {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const isMobileOpen = false;
   // State for notification count (you can replace this with your actual data source)
   const [notificationCount,setNotificationCount] = useState(0);
   const [activeTab, setActiveTab] = useState('Payroll');
@@ -23,6 +23,9 @@ const TeslaDashboard = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const loadingError = '';
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(prev => !prev);
+  };
   // type Notification = {
   //     id: number;
   //     user_id: number;
@@ -227,8 +230,8 @@ const TeslaDashboard = () => {
                       key={item.name}
                       className={`
                         flex items-center space-x-3 px-4 py-4 
-                        text-gray-50 hover:bg-gray-100 w-full text-left 
-                        ${activeTab === item.name ? 'bg-green-50 text-emerald-500' : ''}
+                        text-gray-50 hover:bg-gray-900 w-full text-left 
+                        ${activeTab === item.name ? 'bg-gray-800 text-emerald-500' : ''}
                       `}
                       onClick={() => {
                         if (item.name === 'Logout') {
@@ -275,9 +278,11 @@ const TeslaDashboard = () => {
     { name: 'Team', icon: <UsersRound size={24} /> },
     { name: 'Wallet', icon: <Wallet size={24} /> },
     { name: 'Profile', icon: <User size={24} /> },
+    { name: 'Analysis', icon: <ChartNoAxesCombined size={24} /> },
   ];
 
   const mobileNavItems = [
+    { name: 'Analysis', icon: <ChartNoAxesCombined size={24}/> },
     { name: 'Logout', icon: <PowerIcon size={24} className='text-red-500'/> },
   ]
   
@@ -296,10 +301,7 @@ const TeslaDashboard = () => {
   };
   
   // Toggle mobile menu
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-    setIsMobileOpen(!isMobileOpen);
-  };
+
   
   const LoadingScreen = () => (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-900">
@@ -332,7 +334,7 @@ const TeslaDashboard = () => {
 
   const renderPlaceholder = (name:string) => {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-50 text-gray-500">
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-gray-500">
         <div className="text-6xl mb-4">{name === 'Help' ? <HelpCircle size={64} /> : (name === 'Logout' ? <LogOut size={64} /> : '🚧')}</div>
         <h2 className="text-2xl font-medium mb-2">{name} Page</h2>
         <p>This {String(name).toLowerCase()} page is under construction.</p>
