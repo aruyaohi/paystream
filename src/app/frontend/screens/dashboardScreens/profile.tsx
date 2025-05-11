@@ -25,7 +25,6 @@ import {
   LogOut
 } from "lucide-react";
 
-import Image from "next/image";
 
 // Define types for profile data
 interface UserProfile {
