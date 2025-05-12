@@ -10,7 +10,6 @@ import {
   Download,
   Users,
   CalendarClock,
-  TrendingUp,
   Edit,
   CheckCircle,
   FilePen
@@ -671,9 +670,6 @@ const PayrollManagement: React.FC = () => {
             <p className="text-gray-400 text-sm mb-1">Total Payroll Balance</p>
             <div className="flex items-baseline">
               <h1 className="text-4xl font-bold text-white">{totalPayrollAmount.toLocaleString()} <span className="text-sm">USDC </span></h1>
-              <span className="ml-3 text-emerald-400 flex items-center text-sm font-medium">
-                <TrendingUp className="h-4 w-4 mr-1" /> 12.4%
-              </span>
             </div>
             <p className="text-gray-500 text-xs mt-2">Last updated: May 9, 2025</p>
           </div>
@@ -699,7 +695,7 @@ const PayrollManagement: React.FC = () => {
                 <div className="h-6 w-6 rounded bg-gray-700 flex items-center justify-center">
                   <CalendarClock className="h-3 w-3 text-emerald-400" />
                 </div>
-                <p className="ml-2 text-gray-400 text-xs">Pending Payrolls</p>
+                <p className="ml-2 text-gray-400 text-xs">Team Number</p>
               </div>
               <div className="flex items-baseline">
                 <p className="text-2xl font-bold text-white">{pendingPayrolls}</p>
