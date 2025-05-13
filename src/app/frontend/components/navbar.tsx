@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
-  Wallet, 
-  LogIn, 
   Zap,
   Menu, 
   X, 
@@ -13,12 +11,10 @@ import {
   Users,
   CircleDollarSign,
   Clock,
-  Globe,
+  DollarSign,
 } from "lucide-react";
 
 import { UserButton } from "@civic/auth/react";
-import { useUser } from "@civic/auth/react";
-import { useRouter } from "next/navigation";
 
 
 
@@ -27,16 +23,7 @@ const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   // const [isLoggedIn,setIsLoggedIn] = useState(false)
-  const { user } = useUser(); // ✅ move this here
-  const router = useRouter()
 
-  useEffect(() => {
-    if (user) {
-      console.log("Logged in user:", user);
-      router.push('/dashboard')
-    }
-  }, [user,router]);
-  
   // Handle scroll effect for navbar
   useEffect(() => {
     const handleScroll = () => {
@@ -103,15 +90,15 @@ const Navbar: React.FC = () => {
                     onClick={() => setShowDropdown(false)}
                   >
                     <Users className="inline-block h-4 w-4 mr-2 text-blue-400" />
-                    Team Payroll
+                    Payroll
                   </Link>
                   <Link
                     href="/crypto-exchange"
                     className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800 hover:text-emerald-400"
                     onClick={() => setShowDropdown(false)}
                   >
-                    <Globe className="inline-block h-4 w-4 mr-2 text-blue-400" />
-                    Global Payments
+                    <DollarSign className="inline-block h-4 w-4 mr-2 text-purple-400" />
+                    Crypto Payment
                   </Link>
                   <Link
                     href="/scheduled-pay"
@@ -136,7 +123,7 @@ const Navbar: React.FC = () => {
 
           {/* Auth Buttons - Desktop */}
           <div className="hidden md:flex items-center space-x-3">
-                    <UserButton className="px-8 py-4 border border-transparent text-base font-medium rounded-full text-white bg-gradient-to-r from-blue-400 to-emerald-400 hover:shadow-lg hover:shadow-blue-500/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all flex items-center justify-center sm:w-auto"/>
+              <UserButton className="px-8 py-4 border border-transparent text-base font-medium rounded-full text-white bg-gradient-to-r from-blue-400 to-emerald-400 hover:shadow-lg hover:shadow-blue-500/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all flex items-center justify-center sm:w-auto"/>
           </div>
           {/* Mobile menu button */}
           <div className="flex items-center md:hidden">
@@ -173,15 +160,15 @@ const Navbar: React.FC = () => {
               onClick={() => setShowMobileMenu(false)}
             >
               <BarChart3 className="inline-block h-4 w-4 mr-2 text-blue-400" />
-              Analytics
+              Payroll
             </Link>
             <Link
               href="/payroll"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-emerald-400 hover:bg-gray-800"
               onClick={() => setShowMobileMenu(false)}
             >
-              <Users className="inline-block h-4 w-4 mr-2 text-blue-400" />
-              Team Payroll
+              <DollarSign className="inline-block h-4 w-4 mr-2 text-blue-400" />
+              Crypto payments
             </Link>
             <Link
               href="/stable-coins"
@@ -191,26 +178,6 @@ const Navbar: React.FC = () => {
               <CircleDollarSign className="inline-block h-4 w-4 mr-2 text-emerald-400" />
               Stablecoins
             </Link>
-          </div>
-          <div className="pt-4 pb-3 border-t border-gray-800">
-            <div className="flex flex-col space-y-2 px-5 pb-3">
-              <Link href="/connect-wallet">
-                <button
-                  className="w-full px-4 py-2 text-sm font-medium text-gray-300 bg-gray-800 border border-gray-700 rounded-full hover:border-blue-700 hover:bg-gray-700 flex items-center justify-center"
-                >
-                  <Wallet className="h-4 w-4 mr-2" />
-                  Connect Wallet
-                </button>
-              </Link>
-              <Link href="/login">
-                <button
-                  className="w-full px-4 py-2 text-sm font-medium text-black bg-gradient-to-r from-blue-400 to-emerald-400 rounded-full hover:shadow-md hover:shadow-blue-500/20 flex items-center justify-center"
-                >
-                  <LogIn className="h-4 w-4 mr-2" />
-                  Login
-                </button>
-              </Link>
-            </div>
           </div>
         </div>
       )}

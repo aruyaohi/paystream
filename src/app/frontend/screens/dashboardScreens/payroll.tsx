@@ -1,6 +1,10 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import LoadingScreen from "../../components/loading";
+import PayrollForm from "./payroll_screens/payroll_form";
+import PayrollDetails from "./payroll_screens/payroll_details";
+
 import {
   ArrowLeft,
   Trash2,
@@ -16,7 +20,7 @@ import {
   FilePen
 } from "lucide-react";
 
-// Define a type for an Employee
+
 interface Employee {
   id: string;
   name: string;
@@ -25,136 +29,28 @@ interface Employee {
   salary: number;
   joinDate: string;
   status: "Active" | "On Leave" | "Terminated";
-  paymentMethod: "Direct Deposit" | "Check";
+  walletAddress : string,
   email: string;
 }
 
-// Define a type for a Payroll
 interface Payroll {
   id: string;
   name: string;
   dateCreated: string;
   totalAmount: number;
+  type: 'one-time' | 'concurrent',
   employees: Employee[];
   status: "Pending" | "Processed" | "Cancelled";
   payPeriodStart: string;
   payPeriodEnd: string;
 }
 
-// Mock data for employees
 const initialEmployees: Employee[] = [
-  {
-    id: "emp001",
-    name: "James Wilson",
-    position: "Senior Developer",
-    department: "Engineering",
-    salary: 95000,
-    joinDate: "2022-05-15",
-    status: "Active",
-    paymentMethod: "Direct Deposit",
-    email: "james.wilson@example.com"
-  },
-  {
-    id: "emp002",
-    name: "Emily Rodriguez",
-    position: "Marketing Manager",
-    department: "Marketing",
-    salary: 85000,
-    joinDate: "2021-08-22",
-    status: "Active",
-    paymentMethod: "Direct Deposit",
-    email: "emily.rodriguez@example.com"
-  },
-  {
-    id: "emp003",
-    name: "Michael Chen",
-    position: "Financial Analyst",
-    department: "Finance",
-    salary: 78000,
-    joinDate: "2023-01-10",
-    status: "Active",
-    paymentMethod: "Check",
-    email: "michael.chen@example.com"
-  },
-  {
-    id: "emp004",
-    name: "Sarah Johnson",
-    position: "HR Specialist",
-    department: "Human Resources",
-    salary: 72000,
-    joinDate: "2022-11-05",
-    status: "On Leave",
-    paymentMethod: "Direct Deposit",
-    email: "sarah.johnson@example.com"
-  },
-  {
-    id: "emp005",
-    name: "David Thompson",
-    position: "Product Manager",
-    department: "Product",
-    salary: 92000,
-    joinDate: "2021-03-18",
-    status: "Active",
-    paymentMethod: "Direct Deposit",
-    email: "david.thompson@example.com"
-  }
 ];
 
-// Mock data for payrolls
 const initialPayrolls: Payroll[] = [
-  {
-    id: "pay001",
-    name: "May 2025 Biweekly",
-    dateCreated: "2025-05-01",
-    totalAmount: 157000,
-    employees: [initialEmployees[0], initialEmployees[1], initialEmployees[4]],
-    status: "Pending",
-    payPeriodStart: "2025-05-01",
-    payPeriodEnd: "2025-05-15"
-  },
-  {
-    id: "pay002",
-    name: "Engineering Department Q2",
-    dateCreated: "2025-04-25",
-    totalAmount: 95000,
-    employees: [initialEmployees[0]],
-    status: "Processed",
-    payPeriodStart: "2025-04-01",
-    payPeriodEnd: "2025-06-30"
-  },
-  {
-    id: "pay003",
-    name: "Marketing Team Monthly",
-    dateCreated: "2025-04-30",
-    totalAmount: 85000,
-    employees: [initialEmployees[1]],
-    status: "Pending",
-    payPeriodStart: "2025-05-01",
-    payPeriodEnd: "2025-05-31"
-  },
-  {
-    id: "pay004",
-    name: "Finance Department Biweekly",
-    dateCreated: "2025-04-28",
-    totalAmount: 78000,
-    employees: [initialEmployees[2]],
-    status: "Processed",
-    payPeriodStart: "2025-04-15",
-    payPeriodEnd: "2025-04-30"
-  },
-  {
-    id: "pay005",
-    name: "HR Monthly Payroll",
-    dateCreated: "2025-04-30",
-    totalAmount: 72000,
-    employees: [initialEmployees[3]],
-    status: "Cancelled",
-    payPeriodStart: "2025-05-01",
-    payPeriodEnd: "2025-05-31"
-  }
 ];
 
-// Define page types
 type PageType = 'list' | 'create' | 'edit' | 'view';
 
 // Animation variants
@@ -170,377 +66,12 @@ const pageTransition = {
   duration: 0.4
 };
 
-// Loading Screen Component
-const LoadingScreen = () => {
-  return (
-    <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 backdrop-blur-sm"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      <div className="flex flex-col items-center gap-4">
-        <motion.div
-          className="w-12 h-12 border-4 border-t-emerald-500 border-emerald-900 rounded-full"
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-        />
-      </div>
-    </motion.div>
-  );
-};
 
-// Payroll Form Component
-interface PayrollFormProps {
-  payroll: Payroll | null;
-  employees: Employee[];
-  onSubmit: (payrollData: Omit<Payroll, 'id'> | Payroll) => void;
-  onCancel: () => void;
-}
-
-const PayrollForm: React.FC<PayrollFormProps> = ({ payroll, employees, onSubmit, onCancel }) => {
-  const [formData, setFormData] = useState<Omit<Payroll, 'id'> | Payroll>(payroll || {
-    name: "",
-    dateCreated: new Date().toISOString().split('T')[0],
-    totalAmount: 0,
-    employees: [],
-    status: "Pending",
-    payPeriodStart: "",
-    payPeriodEnd: ""
-  });
-  
-  const [selectedEmployeeIds, setSelectedEmployeeIds] = useState<string[]>(
-    payroll ? payroll.employees.map(emp => emp.id) : []
-  );
-
-  useEffect(() => {
-    if (payroll) {
-      setFormData(payroll);
-      setSelectedEmployeeIds(payroll.employees.map(emp => emp.id));
-    }
-  }, [payroll]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: name === 'totalAmount' ? parseFloat(value) || 0 : value
-    }));
-  };
-
-  const handleEmployeeSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
-    setSelectedEmployeeIds(selectedOptions);
-    
-    // Update employees array and calculate total amount
-    const selectedEmployeeObjects = employees.filter(emp => selectedOptions.includes(emp.id));
-    const totalSalary = selectedEmployeeObjects.reduce((sum, emp) => sum + emp.salary, 0);
-    
-    setFormData(prevData => ({
-      ...prevData,
-      employees: selectedEmployeeObjects,
-      totalAmount: totalSalary
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-100 mb-1">
-            Payroll Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-gray-800 text-white"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="dateCreated" className="block text-sm font-medium text-gray-100 mb-1">
-            Date Created
-          </label>
-          <input
-            type="date"
-            id="dateCreated"
-            name="dateCreated"
-            value={formData.dateCreated}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-gray-800 text-white"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="payPeriodStart" className="block text-sm font-medium text-gray-100 mb-1">
-            Pay Period Start
-          </label>
-          <input
-            type="date"
-            id="payPeriodStart"
-            name="payPeriodStart"
-            value={formData.payPeriodStart}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-gray-800 text-white"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="payPeriodEnd" className="block text-sm font-medium text-gray-100 mb-1">
-            Pay Period End
-          </label>
-          <input
-            type="date"
-            id="payPeriodEnd"
-            name="payPeriodEnd"
-            value={formData.payPeriodEnd}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-gray-800 text-white"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="status" className="block text-sm font-medium text-gray-100 mb-1">
-            Status
-          </label>
-          <select
-            id="status"
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-gray-800 text-white"
-          >
-            <option value="Pending">Pending</option>
-            <option value="Processed">Processed</option>
-            <option value="Cancelled">Cancelled</option>
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="totalAmount" className="block text-sm font-medium text-gray-100 mb-1">
-            Total Amount (USDC)
-          </label>
-          <input
-            type="number"
-            id="totalAmount"
-            name="totalAmount"
-            value={formData.totalAmount}
-            onChange={handleChange}
-            readOnly
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-gray-700 text-white"
-          />
-          <p className="text-xs text-gray-400 mt-1">This is calculated automatically based on selected employees</p>
-        </div>
-      </div>
-
-      <div>
-        <label htmlFor="employees" className="block text-sm font-medium text-gray-100 mb-1">
-          Select Employees
-        </label>
-        <select
-          id="employees"
-          multiple
-          size={5}
-          value={selectedEmployeeIds}
-          onChange={handleEmployeeSelection}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-gray-800 text-white"
-        >
-          {employees.map(employee => (
-            <option key={employee.id} value={employee.id}>
-              {employee.name} - {employee.position} (${employee.salary.toLocaleString()})
-            </option>
-          ))}
-        </select>
-        <p className="text-xs text-gray-400 mt-1">Hold Ctrl/Cmd to select multiple employees</p>
-      </div>
-
-      <div className="flex justify-end space-x-4 pt-4">
-        <motion.button
-          type="button"
-          onClick={onCancel}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="px-6 py-2.5 border border-gray-300 text-gray-300 font-medium rounded-lg hover:bg-gray-700 transition-colors"
-        >
-          Cancel
-        </motion.button>
-
-        <motion.button
-          type="submit"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="px-6 py-2.5 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors"
-        >
-          {payroll ? 'Update Payroll' : 'Create Payroll'}
-        </motion.button>
-      </div>
-    </form>
-  );
-};
-
-// Payroll Details View Component
-interface PayrollDetailsProps {
-  payroll: Payroll;
-  onBack: () => void;
-  onEdit: () => void;
-}
-
-const PayrollDetails: React.FC<PayrollDetailsProps> = ({ payroll, onBack, onEdit }) => {
-  return (
-    <div className="bg-gray-900 rounded-xl shadow-lg p-6 border border-emerald-500">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-100">{payroll.name}</h2>
-        <motion.button
-          onClick={onEdit}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
-        >
-          <Edit size={18} className="mr-2" />
-          Edit Payroll
-        </motion.button>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12 mb-8">
-        <div className="space-y-2">
-          <p className="text-sm text-gray-400">Date Created</p>
-          <p className="text-lg font-medium text-white">
-            {new Date(payroll.dateCreated).toLocaleDateString()}
-          </p>
-        </div>
-
-        <div className="space-y-2">
-          <p className="text-sm text-gray-400">Status</p>
-          <p className="text-lg font-medium">
-            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${
-              payroll.status === 'Processed' ? 'bg-green-100 text-green-800' :
-              payroll.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-              'bg-red-100 text-red-800'
-            }`}>
-              {payroll.status}
-            </span>
-          </p>
-        </div>
-
-        <div className="space-y-2">
-          <p className="text-sm text-gray-400">Pay Period</p>
-          <p className="text-lg font-medium text-white">
-            {new Date(payroll.payPeriodStart).toLocaleDateString()} - {new Date(payroll.payPeriodEnd).toLocaleDateString()}
-          </p>
-        </div>
-
-        <div className="space-y-2">
-          <p className="text-sm text-gray-400">Total Amount (USDC)</p>
-          <p className="text-lg font-medium text-emerald-400">
-            ${payroll.totalAmount.toLocaleString()}
-          </p>
-        </div>
-
-        <div className="space-y-2">
-          <p className="text-sm text-gray-400">Number of Employees</p>
-          <p className="text-lg font-medium text-white">{payroll.employees.length}</p>
-        </div>
-      </div>
-
-      <div className="bg-gray-800 rounded-lg p-4 mb-6">
-        <h3 className="text-lg font-medium text-white mb-4">Included Employees</h3>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-700">
-            <thead>
-              <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Name
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Position
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Department
-                </th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Salary
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-700">
-              {payroll.employees.map(employee => (
-                <tr key={employee.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
-                    {employee.name}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    {employee.position}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    {employee.department}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-emerald-400">
-                    ${employee.salary.toLocaleString()}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div className="mt-8 pt-6 border-t border-gray-700">
-        <motion.button
-          onClick={onBack}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="flex items-center text-gray-300 hover:text-emerald-400 transition-colors"
-        >
-          <ArrowLeft size={18} className="mr-2" />
-          Back to Payroll List
-        </motion.button>
-      </div>
-    </div>
-  );
-};
-
-// // Stats Card Component
-// interface StatsCardProps {
-//   icon: React.ElementType;
-//   title: string;
-//   value: string | number;
-//   color: string;
-// }
-
-// const StatsCard: React.FC<StatsCardProps> = ({ icon: Icon, title, value, color }) => {
-//   return (
-//     <div className="bg-gray-800 rounded-xl shadow-md p-6 border border-gray-700">
-//       <div className="flex items-start">
-//         <div className={`p-3 rounded-lg ${color}`}>
-//           <Icon className="h-6 w-6 text-white" />
-//         </div>
-//         <div className="ml-4">
-//           <h3 className="text-sm font-medium text-gray-400">{title}</h3>
-//           <p className="text-2xl font-bold text-white mt-1">{value}</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
 
 // Main Payroll Management Component
 const PayrollManagement: React.FC = () => {
   const [payrolls, setPayrolls] = useState<Payroll[]>(initialPayrolls);
-  const employees = initialEmployees;
+  const [employees,setEmployees] = useState<Employee[]>(initialEmployees)
   const [currentPage, setCurrentPage] = useState<PageType>('list');
   const [isLoading, setIsLoading] = useState(false);
   const [targetPage, setTargetPage] = useState<PageType | null>(null);
@@ -603,7 +134,6 @@ const PayrollManagement: React.FC = () => {
         payroll.id === (payrollData as Payroll).id ? payrollData as Payroll : payroll
       ));
     }
-
     changePageWithLoading('list');
   };
 
@@ -671,11 +201,7 @@ const PayrollManagement: React.FC = () => {
             <p className="text-gray-400 text-sm mb-1">Total Payroll Balance</p>
             <div className="flex items-baseline">
               <h1 className="text-4xl font-bold text-white">{totalPayrollAmount.toLocaleString()} <span className="text-sm">USDC </span></h1>
-              <span className="ml-3 text-emerald-400 flex items-center text-sm font-medium">
-                <TrendingUp className="h-4 w-4 mr-1" /> 12.4%
-              </span>
             </div>
-            <p className="text-gray-500 text-xs mt-2">Last updated: May 9, 2025</p>
           </div>
 
           {/* Stats Grid */}

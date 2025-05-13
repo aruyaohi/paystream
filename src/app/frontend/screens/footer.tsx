@@ -5,7 +5,6 @@ import {
   Mail, 
   Github, 
   Twitter, 
-  Linkedin, 
   ArrowRight,
   Zap
 } from "lucide-react";
@@ -47,7 +46,7 @@ const PayStreamFooter = () => {
         
         {/* Main footer content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {/* Column 1: Logo and info */}
+          {/* Logo and info */}
           <div>
             <div className="flex items-center mb-4">
               <div className="bg-gradient-to-r from-blue-600 to-emerald-500 rounded-full p-2 mr-2">
@@ -62,16 +61,13 @@ const PayStreamFooter = () => {
               <a href="/twitter" className="text-gray-400 hover:text-blue-400 transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="/linkedin" className="text-gray-400 hover:text-blue-400 transition-colors">
-                <Linkedin className="h-5 w-5" />
-              </a>
               <a href="/github" className="text-gray-400 hover:text-emerald-400 transition-colors">
                 <Github className="h-5 w-5" />
               </a>
             </div>
           </div>
           
-          {/* Column 3: Resources & Contact */}
+          {/* Resources & Contact */}
           <div className="flex justify-between">
             <div>
               <h4 className="text-lg font-semibold text-white mb-4">Resources</h4>
@@ -82,18 +78,8 @@ const PayStreamFooter = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="/global-payroll" className="text-gray-300 hover:text-emerald-400 transition-colors flex items-center">
-                    Global Payroll
-                  </a>
-                </li>
-                <li>
                   <a href="/documentation" className="text-gray-300 hover:text-emerald-400 transition-colors flex items-center">
                     Documentation
-                  </a>
-                </li>
-                <li>
-                  <a href="/api" className="text-gray-300 hover:text-emerald-400 transition-colors flex items-center">
-                    API Reference
                   </a>
                 </li>
                 <li>
@@ -121,7 +107,7 @@ const PayStreamFooter = () => {
           </div>
         </div>
         
-        {/* Bottom bar with legal */}
+        {/* Bottom bar with legal writeups */}
         <div className="pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between">
             <div className="text-sm text-gray-400 mb-4 md:mb-0">
@@ -131,14 +117,12 @@ const PayStreamFooter = () => {
               <a href="/privacy" className="hover:text-blue-400 transition-colors">Privacy Policy</a>
               <a href="/terms" className="hover:text-blue-400 transition-colors">Terms of Service</a>
               <a href="/cookies" className="hover:text-blue-400 transition-colors">Cookie Policy</a>
-              <a href="/dpa" className="hover:text-blue-400 transition-colors">DPA</a>
-              <a href="/acceptable-use" className="hover:text-blue-400 transition-colors">Acceptable Use</a>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Add styles for patterns */}
+      {/* pattern styles */}
       <style jsx>{`
         .bg-grid-pattern {
           background-image: linear-gradient(to right, rgba(75, 85, 99, 0.3) 1px, transparent 1px),

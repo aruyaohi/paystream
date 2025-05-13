@@ -103,7 +103,8 @@ export default function WalletPage() {
                   <h2 className="text-lg text-emerald-100 mb-1">Wallet Balance</h2>
                   <div className="flex items-baseline">
                     <h1 className="text-3xl md:text-4xl font-bold mb-2 animate-pulse">0.00<span className='text-sm'> USDC</span></h1>
-                    <span className="ml-2 text-emerald-300 text-sm">+5.26%</span>
+                    <span className="ml-2 text-emerald-300 text-sm">+5.26%</span>\
+                    <p></p>
                   </div>
                   <p className="text-emerald-200 text-sm">≈ 0.00 SOL</p>
                 </div>

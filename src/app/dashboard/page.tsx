@@ -8,7 +8,7 @@ import NotificationScreen from '../frontend/screens/dashboardScreens/notificatio
 import PayrollManagement from '../frontend/screens/dashboardScreens/payroll';
 import EmployeePage from '../frontend/screens/dashboardScreens/employee';
 import { UserButton } from '@civic/auth/react';
-import { useUser } from '@civic/auth-web3/react';
+import { useUser,SignOutButton } from '@civic/auth-web3/react';
 import { userHasWallet } from '@civic/auth-web3';
 // import { Connection } from '@solana/web3.js';
 
@@ -54,7 +54,7 @@ const TeslaDashboard = () => {
     // };
   
     const userContext = useUser()
-    const user = useUser()
+    const {user} = useUser()
 
   // useEffect(() => {
   //   const fetchNotifications = async () => {
@@ -98,12 +98,6 @@ const TeslaDashboard = () => {
         }
         console.log("User has a wallet");
       }
-
-      // const checkWalletBalance = async () =>{
-      //   const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=26cb6d06-f201-43e1-ae14-1c336ccd324a');
-      //   const { publicKey } = user.solana.wallet;
-      //   const balance = await connection.getBalance(publicKey);
-      // }
 
       createWallet();
     }, [user]);
@@ -409,7 +403,7 @@ const TeslaDashboard = () => {
   <div className="mt-auto border-gray-800 py-4 px-4">
     <div className="flex-col items-center justify-between space-y-5">      
       {/* Logout button */}
-      <button
+      {/* <button
         className="flex items-center space-x-2 text-white bg-gray-900 border border-emerald-500 hover:border-red-500 hover:text-red-500 w-full px-3 py-2 justify-center rounded-lg"
         onClick={handleLogout}
       >
@@ -417,7 +411,8 @@ const TeslaDashboard = () => {
           <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V4a1 1 0 00-1-1H3zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
         </svg>
         <span>Logout</span>
-      </button>
+      </button> */}
+      <SignOutButton/>
     </div>
   </div>
 </div>

@@ -20,7 +20,8 @@ const nextConfig: NextConfig = {
 };
 
 const withCivicAuth = createCivicAuthPlugin({
-  clientId: "b9b288a8-8e48-47bd-9a6b-abc49bdd09c1"
+  clientId: "b9b288a8-8e48-47bd-9a6b-abc49bdd09c1",
+  logoutUrl: 'localhost:3000/'
 });
 
 export default withCivicAuth(nextConfig)

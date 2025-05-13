@@ -22,7 +22,9 @@ import {
   Clock,
   User,
   Settings,
-  LogOut
+  LogOut,
+  LogIn,
+  Trash
 } from "lucide-react";
 
 import Image from "next/image";
@@ -636,7 +638,7 @@ const ProfilePage: React.FC = () => {
       setProfile(prev => ({
         ...prev,
         coverPhoto: user.picture || prev.coverPhoto,
-        phone: typeof user.phone === 'string'? user.phone : prev.phone,
+        phone: typeof user.username === 'string'? user.username : prev.phone,
         name: user.name || prev.name,
         email: user.email || prev.email,
         avatar: typeof user.avatar === 'string' ? user.avatar : prev.avatar,
@@ -736,70 +738,19 @@ const ProfilePage: React.FC = () => {
                         <Mail className="h-5 w-5 text-emerald-500 mt-0.5" />
                         <span className="ml-3 text-gray-300">{profile.email}</span>
                       </li>
-                      <li className="flex items-start">
-                        <Phone className="h-5 w-5 text-emerald-500 mt-0.5" />
-                        <span className="ml-3 text-gray-300">{profile.phone}</span>
-                      </li>
-                      {/* <li className="flex items-start">
-                        <MapPin className="h-5 w-5 text-emerald-500 mt-0.5" />
-                        <span className="ml-3 text-gray-300">{profile.location}</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Briefcase className="h-5 w-5 text-emerald-500 mt-0.5" />
-                        <span className="ml-3 text-gray-300">{profile.department}</span>
-                      </li> */}
-                      <li className="flex items-start">
-                        <Calendar className="h-5 w-5 text-emerald-500 mt-0.5" />
-                        <div className="ml-3">
-                          <span className="text-gray-300">Joined {new Date(profile.joinDate).toLocaleDateString()}</span>
-                          <span className="block text-xs text-gray-500 mt-1">{getTimeSinceJoin()} with the company</span>
-                        </div>
-                      </li>
                     </ul>
                   </div>
-                  {/* Social Links */}
-                  <div className="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
-                    <h2 className="text-xl font-bold text-white mb-4">Connect</h2>
-                    <SocialMediaLinks links={profile.socialMedia} />
-                  </div>
-
-                  {/* Skills Card */}
-                  {/* <div className="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
-                    <h2 className="text-xl font-bold text-white mb-4">Skills</h2>
-                    <div className="flex flex-wrap gap-2">
-                      {profile.skills.map((skill, index) => (
-                        <span 
-                          key={index} 
-                          className="px-3 py-1 bg-gray-700 text-emerald-400 rounded-full text-sm"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div> */}
-
                   {/* Quick Actions Card */}
                   <div className="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
                     <h2 className="text-xl font-bold text-white mb-4">Quick Actions</h2>
-                    <div className="space-y-2">
-                      <motion.button 
-                        whileHover={{ scale: 1.02, x: 5 }}
-                        className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-700 text-gray-300 hover:text-white transition-colors"
-                      >
-                        <div className="flex items-center">
-                          <User className="h-5 w-5 text-emerald-500 mr-3" />
-                          <span>View Public Profile</span>
-                        </div>
-                        <ChevronRight size={16} />
-                      </motion.button>
-                      
+                    <div className="space-y-2">   
                       <motion.button 
                         whileHover={{ scale: 1.02, x: 5 }}
                         className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-700 text-gray-300 hover:text-white transition-colors"
                       >
                         <div className="flex items-center">
                           <Settings className="h-5 w-5 text-emerald-500 mr-3" />
-                          <span>Account Settings</span>
+                          <span>Settings</span>
                         </div>
                         <ChevronRight size={16} />
                       </motion.button>
@@ -809,8 +760,8 @@ const ProfilePage: React.FC = () => {
                         className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-700 text-gray-300 hover:text-white transition-colors"
                       >
                         <div className="flex items-center">
-                          <LogOut className="h-5 w-5 text-emerald-500 mr-3" />
-                          <span>Sign Out</span>
+                          <Trash className="h-5 w-5 text-red-500 mr-3" />
+                          <span>Delete Account</span>
                         </div>
                         <ChevronRight size={16} />
                       </motion.button>
@@ -839,16 +790,6 @@ const ProfilePage: React.FC = () => {
                         onClick={() => setSelectedTab('activity')}
                       >
                         Recent Activity
-                      </button>
-                      <button
-                        className={`flex-1 py-4 text-center font-medium transition-colors ${
-                          selectedTab === 'achievements' 
-                            ? 'text-emerald-500 border-b-2 border-emerald-500' 
-                            : 'text-gray-400 hover:text-gray-200'
-                        }`}
-                        onClick={() => setSelectedTab('achievements')}
-                      >
-                        Achievements
                       </button>
                     </div>
 
