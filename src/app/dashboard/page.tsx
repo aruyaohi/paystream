@@ -1,17 +1,13 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { LogOut, Wallet,AlignLeft, User, HelpCircle, Loader, X, PowerIcon, Bell,Zap,File, UsersRound,ChartNoAxesCombined } from 'lucide-react';
+import { LogOut, Wallet,AlignLeft, HelpCircle, Loader, X, PowerIcon, Bell,Zap,File, UsersRound,ChartNoAxesCombined, TimerIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import WalletPage from '../frontend/screens/dashboardScreens/wallet';
-import InvestorProfile from '../frontend/screens/dashboardScreens/profile';
 import NotificationScreen from '../frontend/screens/dashboardScreens/notifications';
 import PayrollManagement from '../frontend/screens/dashboardScreens/payroll';
 import EmployeePage from '../frontend/screens/dashboardScreens/employee';
-import { UserButton } from '@civic/auth/react';
 import { useUser,SignOutButton } from '@civic/auth-web3/react';
-import { userHasWallet } from '@civic/auth-web3';
-// import { Connection } from '@solana/web3.js';
-
+import { useRouter } from 'next/navigation';
 
 const TeslaDashboard = () => {
  
@@ -53,7 +49,8 @@ const TeslaDashboard = () => {
     //   }
     // };
   
-    const userContext = useUser()
+    // const userContext = useUser()
+    const router = useRouter()
     const {user} = useUser()
 
   // useEffect(() => {
@@ -90,17 +87,43 @@ const TeslaDashboard = () => {
   //   fetchNotifications();
   // }, []);
   
-    useEffect(() => {
-      const createWallet = async () =>{
-        if(userContext.user && !userHasWallet(userContext)){
-          await userContext.createWallet();
-          console.log("user does not have a wallet")
-        }
-        console.log("User has a wallet");
-      }
+    // useEffect(() => {
+    //   if(user){
+    //     console.log("This is the auth token",token)
+    //     // router.push('/dashboard')
+    //     const createWeb3Wallet = async () =>{
+    //       if(userContext.user && !userHasWallet(user)){
+    //         await userContext.createWallet();
+    //         console.log("user does not have a wallet")
+    //       }
+    //       console.log("User has a wallet");
+    //     }
+    //     createWeb3Wallet();
+    //   }
 
-      createWallet();
+     
+    // }, [user,router]);
+
+    useEffect(() => {
+      if (!user) return;
+    
+      // const createWallet = async () => {
+      //   if (!userHasWallet(user)) {
+      //     try {
+      //       await userContext.createWallet();
+      //       console.log("Created wallet for user");
+      //     } catch (err) {
+      //       console.error("Failed to create wallet", err);
+      //     }
+      //   } else {
+      //     console.log("User already has a wallet");
+      //   }
+      // };
+    
+      // createWallet();
+      router.push('/')
     }, [user]);
+    
 
   // const messageRead = () =>{}
   const clearNotifications = () =>{
@@ -271,7 +294,6 @@ const TeslaDashboard = () => {
     { name: 'Payroll', icon: <File size={24} /> },
     { name: 'Team', icon: <UsersRound size={24} /> },
     { name: 'Wallet', icon: <Wallet size={24} /> },
-    { name: 'Profile', icon: <User size={24} /> },
     { name: 'Analysis', icon: <ChartNoAxesCombined size={24} /> },
     { name: 'notification', icon: <Bell size={24} /> },
   ];
@@ -330,9 +352,9 @@ const TeslaDashboard = () => {
   const renderPlaceholder = (name:string) => {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-gray-500">
-        <div className="text-6xl mb-4">{name === 'Help' ? <HelpCircle size={64} /> : (name === 'Logout' ? <LogOut size={64} /> : '🚧')}</div>
+        <div className="text-6xl mb-4">{name === 'Help' ? <HelpCircle size={64} /> : (name === 'Logout' ? <LogOut size={64} /> : <TimerIcon size={30}/>)}</div>
         <h2 className="text-2xl font-medium mb-2">{name} Page</h2>
-        <p>This {String(name).toLowerCase()} page is under construction.</p>
+        <p>Coming Soon...</p>
         {name === 'Logout' && (
           <button 
             onClick={handleLogout}
@@ -347,8 +369,6 @@ const TeslaDashboard = () => {
   
   const renderContent = () => {
     switch (activeTab) {
-      case 'Profile':
-        return <InvestorProfile />;
       case 'Team':
         return <EmployeePage/>;
       case 'Payroll':
@@ -382,7 +402,7 @@ const TeslaDashboard = () => {
                 <Zap className="h-5 w-5 text-black" />
               </div>
               <span className="text-lg font-bold text-white">PayStream</span> */}
-              <UserButton className='border-emerald-500 text-emerald-500 rounded-l-2xl'/>
+              {/* <UserButton className='border-emerald-500 text-emerald-500 rounded-l-2xl'/> */}
           </div>
   <nav className="flex flex-col flex-1 overflow-y-auto py-4">
     {navItems.filter(item => item.name !== 'Logout').map(item => (
@@ -429,7 +449,7 @@ const TeslaDashboard = () => {
         {/* Mobile Bottom Navigation */}
         <div className="md:hidden fixed bottom-0 left-0 right-0 bg-gray-900">
           <nav className="flex justify-around">
-            {navItems.slice(0, 4).map(item => (
+            {navItems.slice(0, 3).map(item => (
               <button
                 key={item.name}
                 className={`flex flex-col items-center py-2 px-4 ${

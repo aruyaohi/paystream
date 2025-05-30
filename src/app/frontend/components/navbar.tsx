@@ -64,7 +64,6 @@ const Navbar: React.FC = () => {
             >
               Dashboard
             </Link>
-                
             <Link
               href="/payments"
               className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-gray-300 hover:text-blue-400 hover:bg-gray-800/60"

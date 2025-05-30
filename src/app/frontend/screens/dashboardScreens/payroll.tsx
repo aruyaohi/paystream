@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import LoadingScreen from "../../components/loading";
 import PayrollForm from "./payroll_screens/payroll_form";
 import PayrollDetails from "./payroll_screens/payroll_details";
+import { TokenUSDC } from "@token-icons/react";
 
 import {
   ArrowLeft,
@@ -32,17 +33,39 @@ interface Employee {
   email: string;
 }
 
+// interface Payroll {
+//   id: string;
+//   name: string;
+//   pay
+//   totalAmount: number;
+//   type: 'one-time' | 'concurrent',
+//   employees: Employee[];
+//   status: "Pending" | "Processed" | "Cancelled";
+//   payPeriodStart: string;
+//   payPeriodEnd: string;
+// }
+
+interface EmployeePayment {
+  employeeId: string;
+  amount: number;
+}
+
 interface Payroll {
   id: string;
   name: string;
   dateCreated: string;
+  payday: string;
   totalAmount: number;
-  type: 'one-time' | 'concurrent',
+  budget: number;
+  type: 'one-time' | 'concurrent';
+  frequency?: 'weekly' | 'monthly' | 'yearly';
   employees: Employee[];
+  employeePayments: EmployeePayment[];
   status: "Pending" | "Processed" | "Cancelled";
   payPeriodStart: string;
   payPeriodEnd: string;
 }
+
 
 const initialEmployees: Employee[] = [
 ];
@@ -70,7 +93,7 @@ const pageTransition = {
 // Main Payroll Management Component
 const PayrollManagement: React.FC = () => {
   const [payrolls, setPayrolls] = useState<Payroll[]>(initialPayrolls);
-  const [employees,setEmployees] = useState<Employee[]>(initialEmployees)
+  const employees = initialEmployees;
   const [currentPage, setCurrentPage] = useState<PageType>('list');
   const [isLoading, setIsLoading] = useState(false);
   const [targetPage, setTargetPage] = useState<PageType | null>(null);
@@ -148,8 +171,8 @@ const PayrollManagement: React.FC = () => {
 
   // Filter payrolls based on search and filters
   const filteredPayrolls = payrolls.filter(payroll => {
-    const matchesSearch = payroll.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'All' || payroll.status === statusFilter;
+    const matchesSearch =  payroll.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus =  statusFilter === 'All' || payroll.status === statusFilter;
 
     return matchesSearch && matchesStatus;
   });
@@ -190,16 +213,24 @@ const PayrollManagement: React.FC = () => {
                 </motion.button>
               </div>
 
-              <div className="rounded-2xl overflow-hidden border border-gray-700 shadow-lg">
-          {/* Total Balance Section */}
-          <div className="p-6 border-b border-gray-700 relative overflow-hidden">
+            <div className="rounded-2xl overflow-hidden border border-gray-700 shadow-lg">
+            {/* Total Balance Section */}
+            <div className="p-6 border-b border-gray-700 relative overflow-hidden">
             {/* Decorative elements */}
             <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-emerald-500 opacity-10 blur-xl"></div>
             <div className="absolute -left-8 -bottom-8 h-16 w-16 rounded-full bg-blue-500 opacity-10 blur-xl"></div>
             
             <p className="text-gray-400 text-sm mb-1">Total Payroll Balance</p>
-            <div className="flex items-baseline">
-              <h1 className="text-4xl font-bold text-white">{totalPayrollAmount.toLocaleString()} <span className="text-sm">USDC </span></h1>
+            <div className="flex items-baseline space-x-2">
+             <div className="bg-blue-500 rounded-full h-8 w-8 items-center justify-center">
+              <TokenUSDC size={30} variant="mono"/> 
+              </div>
+              <h1 className="text-4xl font-bold text-white">  
+                {totalPayrollAmount.toLocaleString()}.00 
+                <span className="text-sm">
+                  USDC 
+                </span>
+                </h1>
             </div>
           </div>
 
@@ -211,7 +242,7 @@ const PayrollManagement: React.FC = () => {
                 <div className="h-6 w-6 rounded bg-gray-700 flex items-center justify-center">
                   <Users className="h-3 w-3 text-emerald-400" />
                 </div>
-                <p className="ml-2 text-gray-400 text-xs">Total Payrolls</p>
+                <p className="ml-2 text-gray-400 text-xs">Team Number</p>
               </div>
               <div className="flex items-baseline">
                 <p className="text-2xl font-bold text-white">{totalPayrolls}</p>
@@ -224,7 +255,7 @@ const PayrollManagement: React.FC = () => {
                 <div className="h-6 w-6 rounded bg-gray-700 flex items-center justify-center">
                   <CalendarClock className="h-3 w-3 text-emerald-400" />
                 </div>
-                <p className="ml-2 text-gray-400 text-xs">Team Number</p>
+                <p className="ml-2 text-gray-400 text-xs">Total Payrolls</p>
               </div>
               <div className="flex items-baseline">
                 <p className="text-2xl font-bold text-white">{pendingPayrolls}</p>
@@ -392,10 +423,10 @@ const PayrollManagement: React.FC = () => {
                 </motion.button>
               </div>
 
-              <div className="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
+              <div className="bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-700">
                 <h2 className="text-2xl font-bold text-white mb-6">Create New Payroll</h2>
                 <PayrollForm
-                  payroll={null}
+                  payroll={currentPayroll}
                   employees={employees}
                   onSubmit={handleSubmitPayrollForm}
                   onCancel={handleBackToList}
@@ -425,7 +456,7 @@ const PayrollManagement: React.FC = () => {
                 </motion.button>
               </div>
 
-              <div className="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
+              <div className="bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-700">
                 <h2 className="text-2xl font-bold text-white mb-6">Edit Payroll</h2>
                 <PayrollForm
                   payroll={currentPayroll}

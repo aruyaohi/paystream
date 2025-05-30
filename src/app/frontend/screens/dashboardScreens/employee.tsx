@@ -26,61 +26,6 @@ interface User {
 
 // Mock data for users on payroll
 const initialUsers: User[] = [
-  {
-    id: "usr001",
-    name: "James Wilson",
-    position: "Senior Developer",
-    department: "Engineering",
-    salary: 95000,
-    joinDate: "2022-05-15",
-    status: "Active",
-    paymentMethod: "Direct Deposit",
-    email: "james.wilson@example.com"
-  },
-  {
-    id: "usr002",
-    name: "Emily Rodriguez",
-    position: "Marketing Manager",
-    department: "Marketing",
-    salary: 85000,
-    joinDate: "2021-08-22",
-    status: "Active",
-    paymentMethod: "Direct Deposit",
-    email: "emily.rodriguez@example.com"
-  },
-  {
-    id: "usr003",
-    name: "Michael Chen",
-    position: "Financial Analyst",
-    department: "Finance",
-    salary: 78000,
-    joinDate: "2023-01-10",
-    status: "Active",
-    paymentMethod: "Check",
-    email: "michael.chen@example.com"
-  },
-  {
-    id: "usr004",
-    name: "Sarah Johnson",
-    position: "HR Specialist",
-    department: "Human Resources",
-    salary: 72000,
-    joinDate: "2022-11-05",
-    status: "On Leave",
-    paymentMethod: "Direct Deposit",
-    email: "sarah.johnson@example.com"
-  },
-  {
-    id: "usr005",
-    name: "David Thompson",
-    position: "Product Manager",
-    department: "Product",
-    salary: 92000,
-    joinDate: "2021-03-18",
-    status: "Active",
-    paymentMethod: "Direct Deposit",
-    email: "david.thompson@example.com"
-  }
 ];
 
 // Define page types
