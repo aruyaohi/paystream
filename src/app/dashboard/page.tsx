@@ -105,7 +105,10 @@ const TeslaDashboard = () => {
     // }, [user,router]);
 
     useEffect(() => {
-      if (!user) return;
+      if (!user) {
+       // createWallet();
+      router.push('/')
+      };
     
       // const createWallet = async () => {
       //   if (!userHasWallet(user)) {
@@ -120,8 +123,7 @@ const TeslaDashboard = () => {
       //   }
       // };
     
-      // createWallet();
-      router.push('/')
+  
     }, [user]);
     
 
